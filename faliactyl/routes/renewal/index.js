@@ -1,0 +1,9 @@
+/**
+ * FALIACTYL DASHBOARD
+ *
+ * @package    FALIACTYL
+ * @author     Hydra Cloud LLC and Zircon Dev
+ * @copyright  Copyright (c) Hydra Cloud LLC
+ * @license    https://hct.digital/apps/faliactyl/eula Faliactyl Eula
+ */
+var _$_2db6=["\x73\x65\x74\x74\x69\x6E\x67\x73","\x2E\x2E\x2F\x2E\x2E\x2F\x68\x61\x6E\x64\x6C\x65\x72\x73\x2F\x72\x65\x61\x64\x53\x65\x74\x74\x69\x6E\x67\x73","\x2E\x2E\x2F\x2E\x2E\x2F\x68\x61\x6E\x64\x6C\x65\x72\x73\x2F\x67\x65\x74\x41\x6C\x6C\x53\x65\x72\x76\x65\x72\x73","\x6E\x6F\x64\x65\x2D\x66\x65\x74\x63\x68","\x65\x6E\x61\x62\x6C\x65\x64","\x72\x65\x6E\x65\x77\x61\x6C","\x69\x64","\x61\x74\x74\x72\x69\x62\x75\x74\x65\x73","\x67\x65\x74","\x6E\x6F\x77","\x64\x65\x6C\x61\x79","\x72\x65\x6E\x65\x77\x61\x6C\x73","\x64\x6F\x6D\x61\x69\x6E","\x70\x74\x65\x72\x6F\x64\x61\x63\x74\x79\x6C","\x64\x65\x6C\x65\x74\x65","\x61\x70\x70\x6C\x69\x63\x61\x74\x69\x6F\x6E\x2F\x6A\x73\x6F\x6E","\x6B\x65\x79","\x6F\x6B","\x74\x68\x65\x6E"];const settings=require(_$_2db6[1])[_$_2db6[0]]();const getAllServers=require(_$_2db6[2]);const fetch=require(_$_2db6[3]);if(settings[_$_2db6[5]][_$_2db6[4]]== true){setInterval(async function(){getAllServers()[_$_2db6[18]](async (_0xBBE4)=>{for(const _0xBBC9 of _0xBBE4){const _0xBBAE= await db[_$_2db6[8]](`renewal-${_0xBBC9[_$_2db6[7]][_$_2db6[6]]}`);if(!_0xBBAE){continue};if(_0xBBAE> Date[_$_2db6[9]]()){continue};if((Date[_$_2db6[9]]()- _0xBBAE)> (settings[_$_2db6[11]][_$_2db6[10]]* 86400000)){const _0xBB93= await fetch(`${settings[_$_2db6[13]][_$_2db6[12]]}/api/application/servers/${_0xBBC9[_$_2db6[7]][_$_2db6[6]]}`,{method:_$_2db6[14],headers:{'\x43\x6F\x6E\x74\x65\x6E\x74\x2D\x54\x79\x70\x65':_$_2db6[15],"\x41\x75\x74\x68\x6F\x72\x69\x7A\x61\x74\x69\x6F\x6E":`Bearer ${settings[_$_2db6[13]][_$_2db6[16]]}`}});if( await _0xBB93[_$_2db6[17]]!== true){continue}; await db[_$_2db6[14]](`renewal-${_0xBBC9[_$_2db6[7]][_$_2db6[6]]}`)}}})},5000)}

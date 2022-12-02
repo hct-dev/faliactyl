@@ -1,0 +1,242 @@
+name: Faliactyl
+icon: https://cdn.discordapp.com/attachments/998170574843035720/1003467646769057882/unknown.png
+defaulttheme: default
+version: 3.1.2
+website:
+  port: 8080
+  secret: Example Secret
+
+discordserver:
+  enabled: true
+  invitelink: https://discord.com/example
+
+ads:
+  enabled: false
+  script: ''
+
+guildblacklist:
+  guilds:
+  - ServerID
+  - ServerID
+
+pterodactyl:
+  domain: https://panel.example.com
+  key: API KEY
+
+storelimits:
+  ram: 8192
+  disk: 16384
+  cpu: 400
+  databases: 4
+  allocations: 4
+  backups: 4
+
+AFK Party: 
+  enabled: false
+  webhook: ""
+  users: 1
+  multiplier: 2	
+
+linkvertise:
+  enabled: false
+  userid: 00000
+  coins: 25
+
+status:
+  enabled: false
+  script: https://example.com
+
+stripe:
+  enabled: false  
+  key: 0000000000 # Replace this with your Stripe API Key
+  coins: 200 # Coins per amount in USD
+  amount: 1
+
+smtp:
+  enabled: true
+  mailfrom: support@example.com
+  host: mail.example.com
+  port: 465
+  username: support@example.net
+  password: PASSWORD
+
+api:
+  server:
+    enabled: false
+    key: API KEY
+  client:
+    j4r: 
+      enabled: false
+      ads:
+      - name: Example Server 1
+        id: 933803406513012807
+        invite: https://discord.gg/7m5d4K8Mwg
+        coins: 50
+      - name: Example Server 2
+        id: 933803406513012807
+        invite: https://discord.gg/7m5d4K8Mwg
+        coins: 50
+
+    Role Packages:
+      enabled: false
+      Server: SERVERID # Replace SERVERID with your Guild/Server ID
+      list: # Replace ROLEID with the Role ID, you can add as many as you want.
+        RoleID: Package Name 
+
+    bot:
+      token: ""
+      joinguild:
+        enabled: false
+        guildid:
+        - SERVERID
+        - SERVERID
+        forcejoin: false
+        registeredrole: ""
+
+    webhook:
+      webhook_url: ""
+      auditlogs:
+        enabled: false
+        disabled: []
+
+    passwordgenerator:
+      signup: true # Use this to disable signups
+      length: 8
+
+    allow:
+      gift: true
+      newusers: true
+      regen: true
+      server:
+        create: true
+        modify: true
+        delete: true
+
+    oauth2: # Discord OAUTH2
+      id: ""
+      secret: ""
+      link: "http://localhost:8080" # This link is used for many other features, make sure it is the dashboard URL.
+      callbackpath: "/callback"
+      prompt: true
+    
+    ip:
+      trust x-forwarded-for: true
+      block: []
+      duplicate check: false
+
+    packages:
+      default: default
+      list:
+        default:
+          ram: 1024
+          disk: 1024
+          cpu: 100
+          servers: 1
+          databases: 2
+          allocations: 2
+          backups: 2
+
+    locations:
+      '1':
+        name: EXAMPLE LOCATION
+        package: null
+
+    eggs:
+      paper:
+        display: Minecraft Java (Paper)
+        minimum:
+          ram: 512
+          disk: 512
+          cpu: 25
+        maximum:
+          ram: 8000
+          disk: 16000
+          cpu: 400
+        info:
+          egg: 15
+          docker_image: ghcr.io/pterodactyl/yolks:java_17
+          startup: java -Xms128M -XX:MaxRAMPercentage=95.0 -Dterminal.jline=false -Dterminal.ansi=true -jar {{SERVER_JARFILE}}
+          environment:
+            MINECRAFT_VERSION: "latest"
+            SERVER_JARFILE: "server.jar"
+            DL_PATH: ""
+            BUILD_NUMBER: "latest"
+          feature_limits:
+            databases: 2
+            backups: 2
+
+    coins:
+      enabled: true
+      store:
+        enabled: true
+        ram:
+          cost: 100
+          per: 1
+        disk:
+          cost: 100
+          per: 1
+        cpu:
+          cost: 100
+          per: 1
+        servers:
+          cost: 100
+          per: 1
+        databases:
+          cost: 100
+          per: 1
+        ports:
+          cost: 100
+          per: 1
+        backups:
+          cost: 100
+          per: 1
+
+  minero:
+    enabled: false
+    key: Minero Public Key
+
+  arcio:
+    enabled: false
+    widgetid: WIDGETID
+    afk page:
+      enabled: false
+      path: faliactyl_endpoint1
+      every: 10
+      coins: 1
+      coinlimit: 50 # Daily coin limit, set to 0 if you want to disable it.
+
+referral:
+  coins: 1000 # Replace coins with how many coins you want the user and the person who invited the user to receive.
+
+whitelist:
+  enabled: false
+  users:
+    - Email Address
+
+blacklist:
+  enabled: false
+  users:
+    - Email Address
+
+nologin:
+  enabled: false # Suspends user if user doesn't login after amount of days
+  days: 7
+
+servercreation:
+  cost: 0
+
+renewal: 
+  enabled: false
+  cost: 200
+  delay: 3 
+
+AntiVPN:
+  enabled: false
+  key: KEY
+  whitelistedIPs:
+    - IP Address
+
+widget:
+  enabled: false
+  server_id: GUILD_ID
+  channel_Id: CHANNEL_ID

@@ -1,0 +1,96 @@
+index: ./auth/index.ejs
+notfound: 404.ejs
+nopermission: 403.ejs
+redirect:
+  callback: "/dashboard"
+  failedcallback: "/"
+  logout: "/"
+  deleteserver: "/dashboard"
+  updateservers: "/dashboard"
+  createserver: "/dashboard"
+  failedcreateserver: "/servers/create"
+  modifyserver: "/dashboard"
+  failedmodifyserver: "/servers/edit"
+  setplan: "/admin"
+  failedsetplan: "/admin"
+  getip: "/admin"
+  failedgetip: "/admin"
+  createserverdisabled: "/dashboard?err=disabled"
+  modifyserverdisabled: "/dashboard?err=disabled"
+  deleteserverdisabled: "/dashboard?err=disabled"
+  regenpassword: "/dashboard"
+  setresources: "/admin"
+  failedsetresources: "/admin"
+  giftresources: "/gift"
+  failedgiftresources: "/gift"
+  renewserver: "/dashboard"
+  failedrenewserver: "/dashboard"
+  setcoins: "/admin"
+  failedsetcoins: "/admin"
+  purchaseram: "/store"
+  failedpurchaseram: "/store"
+  purchasedisk: "/store"
+  failedpurchasedisk: "/store"
+  purchasecpu: "/store"
+  failedpurchasecpu: "/store"
+  purchaseservers: "/store"
+  failedpurchaseservers: "/store"
+  purchasedatabases: "/store"
+  failedpurchasedatabases: "/store"
+  purchasebackups: "/store"
+  failedpurchasebackups: "/store"
+  purchaseallocations: "/store"
+  failedpurchaseallocations: "/store"
+  arcioerror: "/dashboard?err=AFK_LIMIT_REACHED"
+  missingorinvalidcouponcode: "/redeem"
+  successfullyredeemedcoupon: "/redeem"
+  couponcreationfailed: "/admin"
+  couponcreationsuccess: "/admin"
+  couponrevokefailed: "/admin"
+  couponrevokesuccess: "/admin"
+  removeaccountfailed: "/admin"
+  removeaccountsuccess: "/admin"
+
+pages:
+  register: ./auth/register.ejs
+  dashboard: dashboard.ejs
+  servers/create: create.ejs
+  servers/edit: edit.ejs
+  admin: admin.ejs
+  store: store.ejs
+  afk: arcio.ejs
+  redeem: redeem.ejs
+  gift: gift.ejs
+  j4r: j4r.ejs
+  status: status.ejs
+  lv: linkvertise.ejs
+  buy: buy.ejs
+  accounts: accounts.ejs
+  faq: faq.ejs
+  settings: accounts.ejs
+  referral: ./referral/index.ejs
+  reset/password: ./reset/request.ejs
+  reset/password/form: ./reset/password.ejs
+
+mustbeloggedin:
+  - "/dashboard"
+  - "/servers/create"
+  - "/servers/edit"
+  - "/store"
+  - "/afk"
+  - "/redeem"
+  - "/gift"
+  - "/j4r"
+  - "/status"
+  - "/lv"
+  - "/buy"
+  - "/accounts"
+  - "/faq"
+  - "/settings"
+  - "/referral"
+
+mustbeadmin:
+  - "/admin"
+
+generateafktoken:
+  - "/afk"
