@@ -4,8 +4,10 @@ set -e
 
 # ------------------ Variables ----------------- #
 
+
 # Versioning
 export VERSION=$(curl --silent "https://raw.githubusercontent.com/hct-dev/faliactyl/main/release")
+export GITHUB_URL="https://raw.githubusercontent.com/hct-dev/faliactyl/main"
 
 # Faliactyl versions
 export FALIACTYL_PANEL_VERSION=""
