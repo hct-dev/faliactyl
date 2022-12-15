@@ -3,12 +3,7 @@
 set -e
 
 # Check if script is loaded, load if not or fail otherwise.
-fn_exists() { declare -F "$1" >/dev/null; }
-if ! fn_exists lib_loaded; then
-  # shellcheck source=lib/lib.sh
-  source /tmp/lib.sh || source <(curl -sSL "https://raw.githubusercontent.com/hct-dev/faliactyl/main/lib.sh")
-  ! fn_exists lib_loaded && echo "* ERROR: Could not load lib script" && exit 1
-fi
+curl -o lib.sh https://raw.githubusercontent.com/hct-dev/faliactyl/main/lib.sh
 
 # ------------------ Variables ----------------- #
 
@@ -393,3 +388,4 @@ perform_install() {
 # ------------------- Install ------------------ #
 
 perform_install
+rm lib.sh
