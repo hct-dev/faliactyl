@@ -77,8 +77,6 @@ hyperlink() {
 
 # First argument is wings / panel / neither
 welcome() {
-  get_latest_versions
-
   print_brake 70
   output "Faliactyl installation script"
   output ""
