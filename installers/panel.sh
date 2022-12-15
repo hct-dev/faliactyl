@@ -24,7 +24,6 @@ MYSQL_PASSWORD="${MYSQL_PASSWORD:-$(gen_passwd 64)}"
 timezone="${timezone:-Europe/Stockholm}"
 
 # Assume SSL, will fetch different config if true
-ASSUME_SSL="${ASSUME_SSL:-false}"
 CONFIGURE_LETSENCRYPT="${CONFIGURE_LETSENCRYPT:-false}"
 
 # Firewall
@@ -353,13 +352,13 @@ configure_nginx() {
 
   rm -rf $CONFIG_PATH_ENABL/default
 
-  curl -o $CONFIG_PATH_AVAIL/pterodactyl.conf "$GITHUB_URL"/configs/$DL_FILE
+  curl -o $CONFIG_PATH_AVAIL/faliactyl.conf "$GITHUB_URL"/configs/$DL_FILE
 
-  sed -i -e "s@<domain>@${FQDN}@g" $CONFIG_PATH_AVAIL/pterodactyl.conf
+  sed -i -e "s@<domain>@${FQDN}@g" $CONFIG_PATH_AVAIL/faliactyl.conf
 
   case "$OS" in
   ubuntu | debian)
-    ln -sf $CONFIG_PATH_AVAIL/pterodactyl.conf $CONFIG_PATH_ENABL/pterodactyl.conf
+    ln -sf $CONFIG_PATH_AVAIL/faliactyl.conf $CONFIG_PATH_ENABL/faliactyl.conf
     ;;
   esac
 
@@ -383,7 +382,7 @@ perform_install() {
   create_db "$MYSQL_DB" "$MYSQL_USER"
   #configure
   #insert_cronjob
-  install_pteroq
+  #install_pteroq
   configure_nginx
   [ "$CONFIGURE_LETSENCRYPT" == true ] && letsencrypt
 
@@ -393,4 +392,3 @@ perform_install() {
 # ------------------- Install ------------------ #
 
 perform_install
-rm lib.sh

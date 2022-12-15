@@ -2,32 +2,6 @@
 
 set -e
 
-######################################################################################
-#                                                                                    #
-# Project 'pterodactyl-installer'                                                    #
-#                                                                                    #
-# Copyright (C) 2018 - 2022, Vilhelm Prytz, <vilhelm@prytznet.se>                    #
-#                                                                                    #
-#   This program is free software: you can redistribute it and/or modify             #
-#   it under the terms of the GNU General Public License as published by             #
-#   the Free Software Foundation, either version 3 of the License, or                #
-#   (at your option) any later version.                                              #
-#                                                                                    #
-#   This program is distributed in the hope that it will be useful,                  #
-#   but WITHOUT ANY WARRANTY; without even the implied warranty of                   #
-#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the                    #
-#   GNU General Public License for more details.                                     #
-#                                                                                    #
-#   You should have received a copy of the GNU General Public License                #
-#   along with this program.  If not, see <https://www.gnu.org/licenses/>.           #
-#                                                                                    #
-# https://github.com/pterodactyl-installer/pterodactyl-installer/blob/master/LICENSE #
-#                                                                                    #
-# This script is not associated with the official Pterodactyl Project.               #
-# https://github.com/pterodactyl-installer/pterodactyl-installer                     #
-#                                                                                    #
-######################################################################################
-
 # Check if script is loaded, load if not or fail otherwise.
 rm -rf /tmp/lib.sh
 curl -sSL -o /tmp/lib.sh https://raw.githubusercontent.com/hct-dev/faliactyl/main/lib.sh
@@ -78,29 +52,9 @@ ask_letsencrypt() {
   fi
 }
 
-ask_assume_ssl() {
-  output "Let's Encrypt is not going to be automatically configured by this script (user opted out)."
-  output "You can 'assume' Let's Encrypt, which means the script will download a nginx configuration that is configured to use a Let's Encrypt certificate but the script won't obtain the certificate for you."
-  output "If you assume SSL and do not obtain the certificate, your installation will not work."
-  echo -n "* Assume SSL or not? (y/N): "
-  read -r ASSUME_SSL_INPUT
-
-  [[ "$ASSUME_SSL_INPUT" =~ [Yy] ]] && ASSUME_SSL=true
-  true
-}
-
-check_FQDN_SSL() {
-  if [[ $(invalid_ip "$FQDN") == 1 && $FQDN != 'localhost' ]]; then
-    SSL_AVAILABLE=true
-  else
-    warning "* Let's Encrypt will not be available for IP addresses."
-    output "To use Let's Encrypt, you must use a valid domain name."
-  fi
-}
-
 main() {
   # check if we can detect an already existing installation
-  if [ -d "/var/www/pterodactyl" ]; then
+  if [ -d "/var/www/faliactyl" ]; then
     warning "The script has detected that you already have Pterodactyl panel on your system! You cannot run the script multiple times, it will fail!"
     echo -e -n "* Are you sure you want to proceed? (y/N): "
     read -r CONFIRM_PROCEED
@@ -124,13 +78,13 @@ main() {
 
   MYSQL_DB="-"
   while [[ "$MYSQL_DB" == *"-"* ]]; do
-    required_input MYSQL_DB "Database name (panel): " "" "panel"
+    required_input MYSQL_DB "Database name (faliactyl): " "" "faliactyl"
     [[ "$MYSQL_DB" == *"-"* ]] && error "Database name cannot contain hyphens"
   done
 
   MYSQL_USER="-"
   while [[ "$MYSQL_USER" == *"-"* ]]; do
-    required_input MYSQL_USER "Database username (pterodactyl): " "" "pterodactyl"
+    required_input MYSQL_USER "Database username (faliactyl): " "" "faliactyl"
     [[ "$MYSQL_USER" == *"-"* ]] && error "Database user cannot contain hyphens"
   done
 
@@ -149,40 +103,19 @@ main() {
     [ -z "$timezone_input" ] && timezone="Europe/Stockholm" # because köttbullar!
   done
 
-  email_input email "Provide the email address that will be used to configure Let's Encrypt and Pterodactyl: " "Email cannot be empty or invalid"
-
-  # Initial admin account
-  email_input user_email "Email address for the initial admin account: " "Email cannot be empty or invalid"
-  required_input user_username "Username for the initial admin account: " "Username cannot be empty"
-  required_input user_firstname "First name for the initial admin account: " "Name cannot be empty"
-  required_input user_lastname "Last name for the initial admin account: " "Name cannot be empty"
-  password_input user_password "Password for the initial admin account: " "Password cannot be empty"
+  email_input email "Provide the email address that will be used to configure Let's Encrypt: " "Email cannot be empty or invalid"
 
   print_brake 72
 
   # set FQDN
   while [ -z "$FQDN" ]; do
-    echo -n "* Set the FQDN of this panel (panel.example.com): "
+    echo -n "* Set the FQDN of Faliactyl (client.example.com): "
     read -r FQDN
     [ -z "$FQDN" ] && error "FQDN cannot be empty"
   done
 
-  # Check if SSL is available
-  check_FQDN_SSL
-
   # Ask if firewall is needed
   ask_firewall CONFIGURE_FIREWALL
-
-  # Only ask about SSL if it is available
-  if [ "$SSL_AVAILABLE" == true ]; then
-    # Ask if letsencrypt is needed
-    ask_letsencrypt
-    # If it's already true, this should be a no-brainer
-    [ "$CONFIGURE_LETSENCRYPT" == false ] && ask_assume_ssl
-  fi
-
-  # verify FQDN if user has selected to assume SSL or configure Let's Encrypt
-  [ "$CONFIGURE_LETSENCRYPT" == true ] || [ "$ASSUME_SSL" == true ] && bash <(curl -s "$GITHUB_URL"/lib/verify-fqdn.sh) "$FQDN"
 
   # summary
   summary
