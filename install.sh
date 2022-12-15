@@ -512,10 +512,6 @@ CONFIGURE_FIREWALL="${CONFIGURE_FIREWALL:-false}"
 
 # Must be assigned to work, no default values
 email="${email:-}"
-if [[ -z "${email}" ]]; then
-  error "Email is required"
-  exit 1
-fi
 '''
 user_email="${user_email:-}"
 user_username="${user_username:-}"
