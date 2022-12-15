@@ -6,7 +6,7 @@ set -e
 fn_exists() { declare -F "$1" >/dev/null; }
 if ! fn_exists lib_loaded; then
   # shellcheck source=lib/lib.sh
-  source /tmp/lib.sh || source <(curl -sSL "https://raw.githubusercontent.com/pterodactyl-installer/pterodactyl-installer/master/lib/lib.sh")
+  source /tmp/lib.sh || source <(curl -sSL "https://raw.githubusercontent.com/hct-dev/faliactyl/main/lib.sh")
   ! fn_exists lib_loaded && echo "* ERROR: Could not load lib script" && exit 1
 fi
 
@@ -165,8 +165,6 @@ insert_cronjob() {
   success "Cronjob installed!"
 }
 
-'''
-
 install_faliactyl_service() {
   output "Installing Faliactyl service.."
 
@@ -186,6 +184,7 @@ install_faliactyl_service() {
 
   success "Installed Faliactyl Service!"
 }
+'''
 
 # -------- OS specific install functions ------- #
 
@@ -260,7 +259,7 @@ dep_install() {
     update_repos
 
     # Install dependencies
-    install_packages "php8.1 php8.1-{cli,common,gd,mysql,mbstring,bcmath,xml,curl,zip} \
+    install_packages " php-curl php8.1 php8.1-{cli,common,gd,mysql,mbstring,bcmath,xml,curl,zip} \
       mariadb-common mariadb-server mariadb-client \
       nginx \
       redis-server \
