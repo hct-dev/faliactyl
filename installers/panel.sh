@@ -49,13 +49,21 @@ install_node() {
   install_packages "nodejs"
   success "Composer installed!"
 }
+
+install_hct() {
+  output "Installing Hydra Cloud Software Manager.."
+  curl -s https://cdn.hct.digital/script.deb.sh | sudo bash
+  install_packages "hct"
+  success "Hydra Cloud Software Manager installed!"
+}
+
 fali_dl() {
   output "Downloading Faliactyl files .. "
   mkdir -p /var/www
   cd /var/www || exit
-  wget https://raw.githubusercontent.com/hct-dev/faliactyl/main/Faliactyl-Release-V$VERSION.zip
-  unzip Faliactyl-Release-V$VERSION.zip
-  rm Faliactyl-Release-V$VERSION.zip
+  wget https://raw.githubusercontent.com/hct-dev/faliactyl/main/Faliactyl-Release-V$FALIACTYL_VERSION.zip
+  unzip Faliactyl-Release-V$FALIACTYL_VERSION.zip
+  rm Faliactyl-Release-V$FALIACTYL_VERSION.zip
   cd faliactyl
   chmod -R 755 storage/*
   success "Downloaded Faliactyl files!"
@@ -259,13 +267,11 @@ perform_install() {
   dep_install
   install_composer
   install_node
+  install_hct
   fali_dl
   install_composer_deps
   create_db_user "$MYSQL_USER" "$MYSQL_PASSWORD"
   create_db "$MYSQL_DB" "$MYSQL_USER"
-  #configure
-  #insert_cronjob
-  #install_pteroq
   configure_nginx
   [ "$CONFIGURE_LETSENCRYPT" == true ] && letsencrypt
 
