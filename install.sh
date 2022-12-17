@@ -52,6 +52,26 @@ ask_letsencrypt() {
   fi
 }
 
+ask_assume_ssl() {
+  output "Let's Encrypt is not going to be automatically configured by this script (user opted out)."
+  output "You can 'assume' Let's Encrypt, which means the script will download a nginx configuration that is configured to use a Let's Encrypt certificate but the script won't obtain the certificate for you."
+  output "If you assume SSL and do not obtain the certificate, your installation will not work."
+  echo -n "* Assume SSL or not? (y/N): "
+  read -r ASSUME_SSL_INPUT
+
+  [[ "$ASSUME_SSL_INPUT" =~ [Yy] ]] && ASSUME_SSL=true
+  true
+}
+
+check_FQDN_SSL() {
+  if [[ $(invalid_ip "$FQDN") == 1 && $FQDN != 'localhost' ]]; then
+    SSL_AVAILABLE=true
+  else
+    warning "* Let's Encrypt will not be available for IP addresses."
+    output "To use Let's Encrypt, you must use a valid domain name."
+  fi
+}
+
 main() {
   # check if we can detect an already existing installation
   if [ -d "/var/www/faliactyl" ]; then
