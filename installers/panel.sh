@@ -35,43 +35,6 @@ if [[ -z "${email}" ]]; then
   error "Email is required"
   exit 1
 fi
-'''
-user_email="${user_email:-}"
-user_username="${user_username:-}"
-user_firstname="${user_firstname:-}"
-user_lastname="${user_lastname:-}"
-user_password="${user_password:-}"
-
-if [[ -z "${email}" ]]; then
-  error "Email is required"
-  exit 1
-fi
-
-if [[ -z "${user_email}" ]]; then
-  error "User email is required"
-  exit 1
-fi
-
-if [[ -z "${user_username}" ]]; then
-  error "User username is required"
-  exit 1
-fi
-
-if [[ -z "${user_firstname}" ]]; then
-  error "User firstname is required"
-  exit 1
-fi
-
-if [[ -z "${user_lastname}" ]]; then
-  error "User lastname is required"
-  exit 1
-fi
-
-if [[ -z "${user_password}" ]]; then
-  error "User password is required"
-  exit 1
-fi
-'''
 # --------- Main installation functions -------- #
 
 install_composer() {
@@ -104,86 +67,6 @@ install_composer_deps() {
   COMPOSER_ALLOW_SUPERUSER=1 composer install --no-dev --optimize-autoloader
   success "Installed composer dependencies!"
 }
-
-# Configure environment
-'''
-configure() {
-  output "Configuring environment.."
-
-  local app_url="http://$FQDN"
-  [ "$ASSUME_SSL" == true ] && app_url="https://$FQDN"
-  [ "$CONFIGURE_LETSENCRYPT" == true ] && app_url="https://$FQDN"
-
-  # Generate encryption key
-  php artisan key:generate --force
-
-  # Fill in environment:setup automatically
-  php artisan p:environment:setup \
-    --author="$email" \
-    --url="$app_url" \
-    --timezone="$timezone" \
-    --cache="redis" \
-    --session="redis" \
-    --queue="redis" \
-    --redis-host="localhost" \
-    --redis-pass="null" \
-    --redis-port="6379" \
-    --settings-ui=true
-
-  # Fill in environment:database credentials automatically
-  php artisan p:environment:database \
-    --host="127.0.0.1" \
-    --port="3306" \
-    --database="$MYSQL_DB" \
-    --username="$MYSQL_USER" \
-    --password="$MYSQL_PASSWORD"
-
-  # configures database
-  php artisan migrate --seed --force
-
-  # Create user account
-  php artisan p:user:make \
-    --email="$user_email" \
-    --username="$user_username" \
-    --name-first="$user_firstname" \
-    --name-last="$user_lastname" \
-    --password="$user_password" \
-    --admin=1
-
-  success "Configured environment!"
-}
-
-insert_cronjob() {
-  output "Installing cronjob.. "
-
-  crontab -l | {
-    cat
-    output "* * * * php /var/www/pterodactyl/artisan schedule:run >> /dev/null 2>&1"
-  } | crontab -
-
-  success "Cronjob installed!"
-}
-
-install_faliactyl_service() {
-  output "Installing Faliactyl service.."
-
-  curl -o /etc/systemd/system/faliactyl.service "$GITHUB_URL"/configs/faliactyl.service
-
-  case "$OS" in
-  debian | ubuntu)
-    sed -i -e "s@<user>@www-data@g" /etc/systemd/system/faliactyl.service
-    ;;
-  rocky | almalinux)
-    sed -i -e "s@<user>@nginx@g" /etc/systemd/system/faliactyl.service
-    ;;
-  esac
-
-  systemctl enable faliactyl.service
-  systemctl start faliactyl
-
-  success "Installed Faliactyl Service!"
-}
-'''
 
 # -------- OS specific install functions ------- #
 
