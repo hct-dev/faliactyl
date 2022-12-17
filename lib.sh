@@ -82,8 +82,6 @@ welcome() {
   output ""
   output "Copyright (C) 2021-2023, Hydra Cloud LLC"
   output ""
-  output "This script is not associated with the official Pterodactyl Project."
-  output ""
   output "Running $OS version $OS_VER."
   if [ "$1" == "panel" ]; then
     output "Latest Faliactyl/panel is $VERSION"

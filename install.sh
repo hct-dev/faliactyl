@@ -55,7 +55,7 @@ ask_letsencrypt() {
 main() {
   # check if we can detect an already existing installation
   if [ -d "/var/www/faliactyl" ]; then
-    warning "The script has detected that you already have Pterodactyl panel on your system! You cannot run the script multiple times, it will fail!"
+    warning "The script has detected that you already have Faliactyl on your system! You cannot run the script multiple times, it will fail!"
     echo -e -n "* Are you sure you want to proceed? (y/N): "
     read -r CONFIRM_PROCEED
     if [[ ! "$CONFIRM_PROCEED" =~ [Yy] ]]; then
@@ -133,7 +133,7 @@ main() {
 
 summary() {
   print_brake 62
-  output "Pterodactyl panel $PTERODACTYL_PANEL_VERSION with nginx on $OS"
+  output "Faliactyl $FALIACTYL_VERSION with nginx on $OS"
   output "Database name: $MYSQL_DB"
   output "Database user: $MYSQL_USER"
   output "Database password: (censored)"
