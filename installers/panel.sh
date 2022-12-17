@@ -216,6 +216,8 @@ letsencrypt() {
 configure_nginx() {
   output "Configuring nginx .."
 
+  apt purge apache2
+
   if [ $ASSUME_SSL == true ] && [ $CONFIGURE_LETSENCRYPT == false ]; then
     DL_FILE="nginx_ssl.conf"
   else
@@ -265,7 +267,7 @@ perform_install() {
   create_db "$MYSQL_DB" "$MYSQL_USER"
   configure_nginx
   [ "$CONFIGURE_LETSENCRYPT" == true ] && letsencrypt
-
+  apt autoremove
   return 0
 }
 
