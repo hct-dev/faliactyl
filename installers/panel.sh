@@ -68,13 +68,6 @@ fali_dl() {
   success "Downloaded Faliactyl files!"
 }
 
-install_composer_deps() {
-  output "Installing composer dependencies.."
-  [ "$OS" == "rocky" ] || [ "$OS" == "almalinux" ] && export PATH=/usr/local/bin:$PATH
-  COMPOSER_ALLOW_SUPERUSER=1 composer install --no-dev --optimize-autoloader
-  success "Installed composer dependencies!"
-}
-
 # -------- OS specific install functions ------- #
 
 enable_services() {
@@ -268,7 +261,6 @@ perform_install() {
   install_node
   install_hct
   fali_dl
-  install_composer_deps
   create_db_user "$MYSQL_USER" "$MYSQL_PASSWORD"
   create_db "$MYSQL_DB" "$MYSQL_USER"
   configure_nginx
