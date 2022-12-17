@@ -114,8 +114,22 @@ main() {
     [ -z "$FQDN" ] && error "FQDN cannot be empty"
   done
 
+  # Check if SSL is available
+  check_FQDN_SSL
+
   # Ask if firewall is needed
   ask_firewall CONFIGURE_FIREWALL
+
+  # Only ask about SSL if it is available
+  if [ "$SSL_AVAILABLE" == true ]; then
+    # Ask if letsencrypt is needed
+    ask_letsencrypt
+    # If it's already true, this should be a no-brainer
+    [ "$CONFIGURE_LETSENCRYPT" == false ] && ask_assume_ssl
+  fi
+
+  # verify FQDN if user has selected to assume SSL or configure Let's Encrypt
+  [ "$CONFIGURE_LETSENCRYPT" == true ] || [ "$ASSUME_SSL" == true ] && bash <(curl -s "$GITHUB_URL"/lib/verify-fqdn.sh) "$FQDN"
 
   # summary
   summary
