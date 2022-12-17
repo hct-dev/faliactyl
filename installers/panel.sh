@@ -65,7 +65,6 @@ fali_dl() {
   unzip Faliactyl-Release-V$FALIACTYL_VERSION.zip
   rm Faliactyl-Release-V$FALIACTYL_VERSION.zip
   cd faliactyl
-  chmod -R 755 storage/*
   success "Downloaded Faliactyl files!"
 }
 
