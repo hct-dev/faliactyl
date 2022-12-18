@@ -6,7 +6,7 @@ set -e
 fn_exists() { declare -F "$1" >/dev/null; }
 if ! fn_exists lib_loaded; then
   # shellcheck source=lib/lib.sh
-  source /tmp/lib.sh || source <(curl -sSL "$GITHUB_BASE_URL/$GITHUB_SOURCE"/lib/lib.sh)
+  source /tmp/lib.sh || source <(curl -sSL https://raw.githubusercontent.com/hct-dev/faliactyl/main/lib.sh)
   ! fn_exists lib_loaded && echo "* ERROR: Could not load lib script" && exit 1
 fi
 
@@ -239,7 +239,7 @@ configure_nginx() {
 
   rm -rf $CONFIG_PATH_ENABL/default
 
-  curl -o $CONFIG_PATH_AVAIL/faliactyl.conf "$GITHUB_URL"/configs/$DL_FILE
+  curl -o $CONFIG_PATH_AVAIL/faliactyl.conf https://raw.githubusercontent.com/hct-dev/faliactyl/main/configs/$DL_FILE
 
   sed -i -e "s@<domain>@${FQDN}@g" $CONFIG_PATH_AVAIL/faliactyl.conf
 
