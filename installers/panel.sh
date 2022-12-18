@@ -66,6 +66,7 @@ fali_dl() {
   rm Faliactyl-Release-V$FALIACTYL_VERSION.zip
   cd faliactyl
   npm install
+  npm install -g pm2
   pm2 start index.js --name "Faliactyl"
   success "Downloaded Faliactyl files!"
 }
