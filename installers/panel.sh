@@ -219,8 +219,8 @@ letsencrypt() {
 configure_nginx() {
   output "Configuring nginx .."
 
-  apt purge apache2
-
+  apt -y purge apache2
+  apt -y purge apache2-bin
   if [ $ASSUME_SSL == true ] && [ $CONFIGURE_LETSENCRYPT == false ]; then
     DL_FILE="nginx_ssl.conf"
   else
@@ -239,10 +239,11 @@ configure_nginx() {
   esac
 
   rm -rf $CONFIG_PATH_ENABL/default
+  rm -rf $CONFIG_PATH_AVAIL/default
 
   curl -o $CONFIG_PATH_AVAIL/faliactyl.conf https://raw.githubusercontent.com/hct-dev/faliactyl/main/configs/$DL_FILE
 
-  sed -i -e "s@<domain>@${FQDN}@g" $CONFIG_PATH_AVAIL/faliactyl.conf
+  sed -i -e "s@<DOMAIN>@${FQDN}@g" $CONFIG_PATH_AVAIL/faliactyl.conf
 
   case "$OS" in
   ubuntu | debian)
@@ -270,7 +271,7 @@ perform_install() {
   create_db "$MYSQL_DB" "$MYSQL_USER"
   configure_nginx
   [ "$CONFIGURE_LETSENCRYPT" == true ] && letsencrypt
-  apt autoremove
+  apt -y autoremove
   return 0
 }
 
