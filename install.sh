@@ -189,12 +189,21 @@ goodbye() {
   print_brake 62
   output "Panel installation completed"
   output ""
-
   [ "$CONFIGURE_LETSENCRYPT" == true ] && output "Your panel should be accessible from $(hyperlink "$FQDN")"
   [ "$ASSUME_SSL" == true ] && [ "$CONFIGURE_LETSENCRYPT" == false ] && output "You have opted in to use SSL, but not via Let's Encrypt automatically. Your panel will not work until SSL has been configured."
   [ "$ASSUME_SSL" == false ] && [ "$CONFIGURE_LETSENCRYPT" == false ] && output "Your panel should be accessible from $(hyperlink "$FQDN")"
 
   output ""
+  output "REBOOT OR RESTART YOUR SERVER NOW IN ORDER FOR THE APP TO WORK!"
+  output ""
+  output "Faliactyl Config is in /var/www/faliactyl/.env AND /var/www/faliactyl/settings.yml"
+  output ""
+  output "Start Faliactyl in /var/www/faliactyl using pm2 start index.js --name Faliactyl"
+  output ""
+  output "Stop Faliactyl use pm2 stop Faliactyl"
+  output "Restart Faliactyl use pm2 restart Faliactyl"
+  output ""
+  output "Further Docs on https://hct.digital/apps/faliactyl/"
   output "Installation is using nginx on $OS"
   output "Thank you for using this script."
   [ "$CONFIGURE_FIREWALL" == false ] && echo -e "* ${COLOR_RED}Note${COLOR_NC}: If you haven't configured the firewall: 80/443 (HTTP/HTTPS) is required to be open!"
